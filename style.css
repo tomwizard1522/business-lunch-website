@@ -1,0 +1,82 @@
+/* Сброс и подготовка */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+}
+
+/* Шапка */
+header {
+    padding: 20px;
+    background-color: #f6f6f6;
+}
+
+header h1 {
+    margin: 0 0 10px;
+    font-size: 28px;
+}
+
+/* Навигация */
+nav a {
+    margin-right: 20px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: tomato;
+}
+
+/* Основные секции */
+main section {
+    padding: 40px 20px;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 26px;
+}
+
+/* Изображение */
+section img {
+    width: 400px;
+    height: auto;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Таблица */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    border: 1px solid #999;
+    padding: 12px;
+    text-align: left;
+}
+
+/* Футер */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: black;
+    color: white;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: tomato;
+}
