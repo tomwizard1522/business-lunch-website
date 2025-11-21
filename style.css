@@ -1,82 +1,220 @@
-/* Сброс и подготовка */
 * {
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    color: #333;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Шапка */
+/* Header */
 header {
-    padding: 20px;
-    background-color: #f6f6f6;
+  background-color: #f8f9fa;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    margin: 0 0 10px;
-    font-size: 28px;
+  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
-/* Навигация */
+nav {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
 nav a {
-    margin-right: 20px;
-    font-size: 18px;
-    text-decoration: none;
-    color: #333;
-    transition: 0.3s;
+  text-decoration: none;
+  color: #34495e;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
 }
 
 nav a:hover {
-    color: tomato;
+  color: tomato;
 }
 
-/* Основные секции */
-main section {
-    padding: 40px 20px;
+#active {
+  color: tomato;
+}
+
+/* Main content */
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+section {
+  margin-bottom: 3rem;
 }
 
 h2 {
-    margin-top: 0;
-    font-size: 26px;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 
-/* Изображение */
-section img {
-    width: 400px;
-    height: auto;
-    display: block;
-    margin-bottom: 20px;
+/* About section - изображение остается большим только здесь */
+.about img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  max-width: 800px;
 }
 
-/* Таблица */
+.about p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* Advantages section */
+.advantages ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+
+.advantages li {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.advantages li:before {
+  content: "•";
+  color: tomato;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Table */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
 }
 
-table th, table td {
-    border: 1px solid #999;
-    padding: 12px;
-    text-align: left;
+table th,
+table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
 }
 
-/* Футер */
+table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Footer */
 footer {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+footer h2 {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+footer p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
 footer a {
-    color: white;
-    text-decoration: none;
+  color: #ecf0f1;
+  text-decoration: none;
 }
 
 footer a:hover {
-    color: tomato;
+  color: tomato;
+}
+
+/* Responsive design for main page */
+@media (max-width: 800px) {
+  header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  nav {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .about img {
+    width: 500px;
+    max-width: 100%;
+    height: 350px; /* Немного уменьшим на планшетах */
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  nav a {
+    font-size: 1.2rem;
+  }
+
+  .about img {
+    width: 100%;
+    height: 300px; /* Уменьшим на мобильных */
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  table {
+    font-size: 0.8rem;
+  }
+
+  table th,
+  table td {
+    padding: 6px;
+  }
+
+  .about img {
+    height: 250px; /* Еще меньше на очень маленьких экранах */
+  }
 }
