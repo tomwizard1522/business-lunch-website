@@ -1,12 +1,17 @@
-// orderManager.js - обновленная версия
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('OrderManager loaded');
+    
+    if (!window.dishes) {
+        console.error('Dishes array not found!');
+        return;
+    }
+
     let selectedDishes = {
         soup: null,
         main: null,
         drink: null
     };
 
-    // Элементы для отображения выбранных блюд в форме
     const orderDisplay = {
         soup: document.getElementById('selected-soup'),
         main: document.getElementById('selected-main'),
@@ -18,36 +23,43 @@ document.addEventListener('DOMContentLoaded', function() {
     const emptyOrderMessage = document.getElementById('empty-order-message');
     const orderCategories = document.querySelectorAll('.order-category');
 
-    // Обработчик клика на карточку блюда
     document.addEventListener('click', function(e) {
-        const dishCard = e.target.closest('.dish-card');
-        if (dishCard) {
-            const dishKeyword = dishCard.getAttribute('data-dish');
-            const dish = dishes.find(d => d.keyword === dishKeyword);
-            
-            if (dish) {
-                selectDish(dish);
+        if (e.target.tagName === 'BUTTON' || e.target.closest('.dish-card')) {
+            const dishCard = e.target.closest('.dish-card');
+            if (dishCard) {
+                const dishKeyword = dishCard.getAttribute('data-dish');
+                const dish = dishes.find(d => d.keyword === dishKeyword);
+                
+                if (dish) {
+                    selectDish(dish);
+                    
+                    // Визуальная обратная связь
+                    document.querySelectorAll('.dish-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    dishCard.classList.add('selected');
+                }
             }
         }
     });
 
-    // Функция выбора блюда
     function selectDish(dish) {
         selectedDishes[dish.category] = dish;
         updateOrderDisplay();
         calculateTotal();
+        console.log(`Selected: ${dish.name}`);
     }
 
-    // Обновление отображения выбранных блюд в форме
     function updateOrderDisplay() {
         let hasSelectedDishes = false;
 
-        // Показываем/скрываем категории и обновляем содержимое
         Object.keys(selectedDishes).forEach(category => {
             const dish = selectedDishes[category];
             const displayElement = orderDisplay[category];
             
             if (displayElement) {
+                const categoryElement = displayElement.closest('.order-category');
+                
                 if (dish) {
                     displayElement.innerHTML = `
                         <div class="selected-dish">
@@ -56,12 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     `;
                     hasSelectedDishes = true;
-                    
-                    // Показываем категорию
-                    const categoryElement = displayElement.closest('.order-category');
-                    if (categoryElement) {
-                        categoryElement.style.display = 'block';
-                    }
+                    if (categoryElement) categoryElement.style.display = 'block';
                 } else {
                     const categoryNames = {
                         soup: 'суп',
@@ -69,37 +76,24 @@ document.addEventListener('DOMContentLoaded', function() {
                         drink: 'напиток'
                     };
                     displayElement.innerHTML = `<span class="not-selected">${categoryNames[category]} не выбран</span>`;
-                    
-                    // Показываем категорию даже если не выбрано
-                    const categoryElement = displayElement.closest('.order-category');
-                    if (categoryElement) {
-                        categoryElement.style.display = 'block';
-                    }
+                    if (categoryElement) categoryElement.style.display = 'block';
                 }
             }
         });
 
-        // Показываем/скрываем сообщение о пустом заказе
         if (emptyOrderMessage) {
-            if (hasSelectedDishes) {
-                emptyOrderMessage.style.display = 'none';
-                // Скрываем категории если ничего не выбрано? Нет, показываем все категории
-                orderCategories.forEach(cat => cat.style.display = 'block');
-            } else {
-                emptyOrderMessage.style.display = 'block';
-                // Скрываем категории если ничего не выбрано
-                orderCategories.forEach(cat => cat.style.display = 'none');
-                if (orderSummary) orderSummary.style.display = 'none';
-            }
+            emptyOrderMessage.style.display = hasSelectedDishes ? 'none' : 'block';
         }
         
-        // Показываем/скрываем блок с итоговой стоимостью
         if (orderSummary) {
             orderSummary.style.display = hasSelectedDishes ? 'block' : 'none';
         }
+
+        if (!hasSelectedDishes) {
+            orderCategories.forEach(cat => cat.style.display = 'none');
+        }
     }
 
-    // Подсчет общей стоимости
     function calculateTotal() {
         let total = 0;
         
@@ -114,6 +108,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Инициализация
     updateOrderDisplay();
 });

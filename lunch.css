@@ -30,12 +30,12 @@
   color: white;
 }
 
-/* Dish card image - БАЛАНСИРОВАННЫЙ РАЗМЕР */
+/* Dish card image */
 .dish-card img {
   width: 100%;
   border-radius: 20px;
   margin-bottom: 15px;
-  height: 160px; /* Оптимальная высота */
+  height: 160px;
   object-fit: contain;
   object-position: center;
   background-color: #f8f9fa;
@@ -95,7 +95,7 @@ nav {
   color: tomato;
 }
 
-/* Form Section - ПОЛНОСТЬЮ ВОССТАНАВЛИВАЕМ */
+/* Form Section */
 .order-form-section {
   margin-top: 3rem;
   padding: 2rem;
@@ -259,9 +259,7 @@ nav {
   color: tomato;
 }
 
-/* Стили для системы выбора блюд */
-
-/* Сообщение о пустом заказе */
+/* Order System Styles */
 .empty-order {
   text-align: center;
   color: #7f8c8d;
@@ -273,7 +271,6 @@ nav {
   border: 1px dashed #bdc3c7;
 }
 
-/* Категории в заказе */
 .order-category {
   margin-bottom: 1.5rem;
   padding: 1rem;
@@ -290,7 +287,6 @@ nav {
   font-size: 1rem;
 }
 
-/* Выбранное блюдо */
 .selected-dish {
   display: flex;
   justify-content: space-between;
@@ -308,13 +304,11 @@ nav {
   color: tomato;
 }
 
-/* Сообщение "не выбрано" */
 .not-selected {
   color: #7f8c8d;
   font-style: italic;
 }
 
-/* Итоговая стоимость */
 .order-summary {
   margin-top: 2rem;
   padding: 1.5rem;
@@ -335,7 +329,6 @@ nav {
   color: #4ecdc4;
 }
 
-/* Анимация при выборе блюда */
 .dish-card.selected {
   border: 2px solid tomato;
   background-color: #fff5f5;

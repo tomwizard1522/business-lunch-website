@@ -21,7 +21,6 @@
     </header>
 
     <main>
-        <!-- Секции будут заполняться через JavaScript -->
         <section class="soups">
             <h2>Супы</h2>
             <div class="dishes-grid">
@@ -150,27 +149,39 @@
     <script src="orderManager.js"></script>
     
     <script>
-        // Обработчики для формы (оставляем существующие)
-        document.getElementById('time-specific').addEventListener('change', function() {
-            document.getElementById('specific-time').disabled = !this.checked;
-        });
-        
-        document.getElementById('time-asap').addEventListener('change', function() {
-            if (this.checked) {
-                document.getElementById('specific-time').disabled = true;
-            }
-        });
-        
-        document.querySelector('.order-form').addEventListener('submit', function(e) {
-            // Валидация формы (можно оставить пустой, так как блюда не отправляются)
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const address = document.getElementById('address').value;
+        // Обработчики для формы
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeSpecific = document.getElementById('time-specific');
+            const timeAsap = document.getElementById('time-asap');
+            const specificTime = document.getElementById('specific-time');
             
-            if (!name || !email || !phone || !address) {
-                e.preventDefault();
-                alert('Пожалуйста, заполните все обязательные поля');
+            if (timeSpecific && specificTime) {
+                timeSpecific.addEventListener('change', function() {
+                    specificTime.disabled = !this.checked;
+                });
+            }
+            
+            if (timeAsap && specificTime) {
+                timeAsap.addEventListener('change', function() {
+                    if (this.checked) {
+                        specificTime.disabled = true;
+                    }
+                });
+            }
+            
+            const orderForm = document.querySelector('.order-form');
+            if (orderForm) {
+                orderForm.addEventListener('submit', function(e) {
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const address = document.getElementById('address').value;
+                    
+                    if (!name || !email || !phone || !address) {
+                        e.preventDefault();
+                        alert('Пожалуйста, заполните все обязательные поля');
+                    }
+                });
             }
         });
     </script>
