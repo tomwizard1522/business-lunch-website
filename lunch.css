@@ -30,12 +30,12 @@
   color: white;
 }
 
-/* Dish card image - БАЛАНС МЕЖДУ РАЗМЕРОМ И АДАПТИВНОСТЬЮ */
+/* Dish card image - БАЛАНСИРОВАННЫЙ РАЗМЕР */
 .dish-card img {
   width: 100%;
   border-radius: 20px;
   margin-bottom: 15px;
-  height: 180px; /* Уменьшаем высоту для баланса */
+  height: 160px; /* Оптимальная высота */
   object-fit: contain;
   object-position: center;
   background-color: #f8f9fa;
@@ -95,7 +95,7 @@ nav {
   color: tomato;
 }
 
-/* Form Section - ВОССТАНАВЛИВАЕМ ФОРМУ */
+/* Form Section - ПОЛНОСТЬЮ ВОССТАНАВЛИВАЕМ */
 .order-form-section {
   margin-top: 3rem;
   padding: 2rem;
@@ -259,7 +259,94 @@ nav {
   color: tomato;
 }
 
-/* Responsive design - ВАЖНО: АДАПТИВНОСТЬ */
+/* Стили для системы выбора блюд */
+
+/* Сообщение о пустом заказе */
+.empty-order {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px dashed #bdc3c7;
+}
+
+/* Категории в заказе */
+.order-category {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid tomato;
+}
+
+.order-category label {
+  display: block;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Выбранное блюдо */
+.selected-dish {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.dish-name {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.dish-price {
+  font-weight: 600;
+  color: tomato;
+}
+
+/* Сообщение "не выбрано" */
+.not-selected {
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* Итоговая стоимость */
+.order-summary {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #2c3e50;
+  border-radius: 8px;
+  color: white;
+}
+
+.total-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+#total-price {
+  font-weight: 700;
+  color: #4ecdc4;
+}
+
+/* Анимация при выборе блюда */
+.dish-card.selected {
+  border: 2px solid tomato;
+  background-color: #fff5f5;
+}
+
+.dish-card.selected button {
+  background-color: tomato;
+  color: white;
+}
+
+/* Responsive design */
 @media (max-width: 900px) {
   .dishes-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -267,7 +354,7 @@ nav {
   }
 
   .dish-card img {
-    height: 160px; /* Уменьшаем на планшетах */
+    height: 150px;
   }
 
   .dish-card {
@@ -279,6 +366,10 @@ nav {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
+
+  .order-form-section {
+    padding: 1.5rem;
+  }
 }
 
 @media (max-width: 600px) {
@@ -288,7 +379,7 @@ nav {
   }
 
   .dish-card img {
-    height: 150px; /* Еще меньше на мобильных */
+    height: 140px;
   }
 
   .dish-card {
@@ -322,7 +413,7 @@ nav {
 
 @media (max-width: 400px) {
   .dish-card img {
-    height: 140px;
+    height: 130px;
   }
 
   .dish-card {
