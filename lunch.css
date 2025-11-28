@@ -417,3 +417,36 @@ nav {
     font-size: 1.5rem;
   }
 }
+.error-message,
+.no-dishes {
+  text-align: center;
+  padding: 2rem;
+  background: #ffeaa7;
+  border: 2px solid #fdcb6e;
+  border-radius: 10px;
+  color: #2d3436;
+  font-weight: 500;
+}
+
+.error-message {
+  background: #ff7675;
+  border-color: #d63031;
+  color: white;
+}
+
+/* Временно добавляем рамки для отладки */
+.dishes-grid {
+  border: 2px dashed #74b9ff;
+  padding: 10px;
+  min-height: 200px;
+}
+
+.soups .dishes-grid {
+  border-color: #74b9ff;
+}
+.main-dishes .dishes-grid {
+  border-color: #55efc4;
+}
+.drinks .dishes-grid {
+  border-color: #a29bfe;
+}
