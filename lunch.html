@@ -50,24 +50,30 @@
                 <div class="form-columns">
                     <div class="order-details">
                         <h3>Ваш заказ</h3>
-                        
+                
                         <div id="empty-order-message" class="empty-order">
                             Ничего не выбрано
                         </div>
-                        
-                        <div class="order-category" style="display: none;">
+                
+                        <div class="order-category">
                             <label>Суп:</label>
-                            <div id="selected-soup" class="selected-dish-container"></div>
+                            <div id="selected-soup" class="selected-dish-container">
+                                <span class="not-selected">суп не выбран</span>
+                            </div>
                         </div>
-                        
-                        <div class="order-category" style="display: none;">
+                
+                        <div class="order-category">
                             <label>Основное блюдо:</label>
-                            <div id="selected-main" class="selected-dish-container"></div>
+                            <div id="selected-main" class="selected-dish-container">
+                                <span class="not-selected">основное блюдо не выбрано</span>
+                            </div>
                         </div>
                         
-                        <div class="order-category" style="display: none;">
+                        <div class="order-category">
                             <label>Напиток:</label>
-                            <div id="selected-drink" class="selected-dish-container"></div>
+                            <div id="selected-drink" class="selected-dish-container">
+                                <span class="not-selected">напиток не выбран</span>
+                            </div>
                         </div>
                         
                         <div id="order-summary" class="order-summary" style="display: none;">

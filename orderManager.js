@@ -74,7 +74,23 @@ function initializeOrderManager() {
     function updateOrderDisplay() {
         let hasSelectedDishes = false;
 
-        // Показываем категории заказа
+        // Проверяем, есть ли выбранные блюда
+        Object.values(selectedDishes).forEach(dish => {
+            if (dish) {
+                hasSelectedDishes = true;
+            }
+        });
+
+        // Управляем видимостью элементов
+        if (emptyOrderMessage) {
+            emptyOrderMessage.style.display = hasSelectedDishes ? 'none' : 'block';
+        }
+        
+        if (orderSummary) {
+            orderSummary.style.display = hasSelectedDishes ? 'block' : 'none';
+        }
+
+        // Всегда показываем категории, но управляем их содержимым
         showOrderCategories();
 
         // Обновляем отображение для каждой категории
@@ -90,7 +106,6 @@ function initializeOrderManager() {
                             <span class="dish-price">${dish.price} ₽</span>
                         </div>
                     `;
-                    hasSelectedDishes = true;
                 } else {
                     const categoryNames = {
                         soup: 'суп',
@@ -101,22 +116,6 @@ function initializeOrderManager() {
                 }
             }
         });
-
-        // Показываем/скрываем сообщение о пустом заказе
-        if (emptyOrderMessage) {
-            if (hasSelectedDishes) {
-                emptyOrderMessage.style.display = 'none';
-                hideOrderCategories(); // Скрываем категории если есть выбранные блюда
-            } else {
-                emptyOrderMessage.style.display = 'block';
-                hideOrderCategories(); // Скрываем категории если ничего не выбрано
-            }
-        }
-        
-        // Показываем/скрываем блок с итоговой стоимостью
-        if (orderSummary) {
-            orderSummary.style.display = hasSelectedDishes ? 'block' : 'none';
-        }
     }
 
     // Подсчет общей стоимости
