@@ -1,5 +1,5 @@
 // dishes.js - массив всех блюд
-const dishes = [
+window.dishes = [
     // Супы
     {
         keyword: "mushroom-soup",
@@ -102,3 +102,5 @@ const dishes = [
         image: "images/green-tea.png"
     }
 ];
+
+console.log('🍽️ Dishes array loaded with', window.dishes.length, 'items');

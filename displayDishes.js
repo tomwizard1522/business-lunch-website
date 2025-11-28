@@ -1,34 +1,28 @@
-// displayDishes.js - с улучшенной обработкой ошибок
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DisplayDishes started');
-    
-    // Проверяем что dishes загружен
-    if (!window.dishes || !Array.isArray(window.dishes)) {
+// displayDishes.js - отображение блюд на странице
+console.log('🔄 DisplayDishes started');
+
+function initializeDisplay() {
+    // Проверяем доступность массива dishes
+    if (typeof dishes === 'undefined' || !Array.isArray(dishes)) {
         console.error('❌ Dishes array not found or invalid!');
-        showError('Ошибка загрузки меню');
+        setTimeout(initializeDisplay, 100); // Повторяем проверку
         return;
     }
-    
-    console.log(`✅ Loaded ${window.dishes.length} dishes`);
 
+    console.log('✅ Dishes array loaded successfully, count:', dishes.length);
+    
     try {
-        // Сортируем блюда по алфавиту
+        // Сортируем блюда в алфавитном порядке по названию
         const sortedDishes = [...dishes].sort((a, b) => a.name.localeCompare(b.name));
         
-        // Группируем по категориям
+        // Группируем блюда по категориям
         const dishesByCategory = {
             soup: sortedDishes.filter(dish => dish.category === 'soup'),
             main: sortedDishes.filter(dish => dish.category === 'main'),
             drink: sortedDishes.filter(dish => dish.category === 'drink')
         };
 
-        console.log('📊 Dishes by category:', {
-            soup: dishesByCategory.soup.length,
-            main: dishesByCategory.main.length, 
-            drink: dishesByCategory.drink.length
-        });
-
-        // Создаем карточку блюда
+        // Функция создания карточки блюда
         function createDishCard(dish) {
             const dishCard = document.createElement('div');
             dishCard.className = 'dish-card';
@@ -45,18 +39,22 @@ document.addEventListener('DOMContentLoaded', function() {
             return dishCard;
         }
 
-        // Отображаем блюда категории
+        // Отображаем блюда по категориям
+        displayCategoryDishes('soup', '.soups .dishes-grid', dishesByCategory.soup);
+        displayCategoryDishes('main', '.main-dishes .dishes-grid', dishesByCategory.main);
+        displayCategoryDishes('drink', '.drinks .dishes-grid', dishesByCategory.drink);
+
         function displayCategoryDishes(category, containerSelector, categoryDishes) {
             const container = document.querySelector(containerSelector);
             if (!container) {
-                console.error(`❌ Container not found: ${containerSelector}`);
+                console.warn(`⚠️ Container not found: ${containerSelector}`);
                 return;
             }
 
             container.innerHTML = '';
             
             if (categoryDishes.length === 0) {
-                container.innerHTML = '<p class="no-dishes">Блюда временно недоступны</p>';
+                container.innerHTML = '<p>Блюда временно недоступны</p>';
                 return;
             }
             
@@ -65,34 +63,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.appendChild(dishCard);
             });
             
-            console.log(`✅ Displayed ${categoryDishes.length} ${category} dishes in ${containerSelector}`);
+            console.log(`✅ Displayed ${categoryDishes.length} ${category} dishes`);
         }
-
-        // Отображаем все категории
-        displayCategoryDishes('soup', '.soups .dishes-grid', dishesByCategory.soup);
-        displayCategoryDishes('main', '.main-dishes .dishes-grid', dishesByCategory.main);
-        displayCategoryDishes('drink', '.drinks .dishes-grid', dishesByCategory.drink);
         
-        console.log('🎉 All dishes displayed successfully!');
-
+        console.log('🎉 All dishes displayed successfully');
+        
     } catch (error) {
         console.error('❌ Error displaying dishes:', error);
-        showError('Ошибка отображения меню');
     }
-});
+}
 
-function showError(message) {
-    // Показываем сообщение об ошибке пользователю
-    const containers = [
-        '.soups .dishes-grid',
-        '.main-dishes .dishes-grid', 
-        '.drinks .dishes-grid'
-    ];
-    
-    containers.forEach(selector => {
-        const container = document.querySelector(selector);
-        if (container) {
-            container.innerHTML = `<p class="error-message">${message}</p>`;
-        }
-    });
+// Запускаем инициализацию когда DOM готов
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeDisplay);
+} else {
+    initializeDisplay();
 }

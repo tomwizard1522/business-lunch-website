@@ -1,17 +1,23 @@
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('OrderManager loaded');
-    
-    if (!window.dishes) {
-        console.error('Dishes array not found!');
+// orderManager.js - управление выбором блюд и подсчет стоимости
+console.log('🔄 OrderManager loaded');
+
+function initializeOrderManager() {
+    // Проверяем доступность массива dishes
+    if (typeof dishes === 'undefined' || !Array.isArray(dishes)) {
+        console.error('❌ Dishes array not found!');
+        setTimeout(initializeOrderManager, 100); // Повторяем проверку
         return;
     }
 
+    console.log('✅ OrderManager started with dishes count:', dishes.length);
+    
     let selectedDishes = {
         soup: null,
         main: null,
         drink: null
     };
 
+    // Элементы для отображения выбранных блюд в форме
     const orderDisplay = {
         soup: document.getElementById('selected-soup'),
         main: document.getElementById('selected-main'),
@@ -23,43 +29,60 @@ document.addEventListener('DOMContentLoaded', function() {
     const emptyOrderMessage = document.getElementById('empty-order-message');
     const orderCategories = document.querySelectorAll('.order-category');
 
+    // Показываем категории заказа
+    function showOrderCategories() {
+        orderCategories.forEach(category => {
+            category.style.display = 'block';
+        });
+    }
+
+    // Скрываем категории заказа
+    function hideOrderCategories() {
+        orderCategories.forEach(category => {
+            category.style.display = 'none';
+        });
+    }
+
+    // Обработчик клика на карточку блюда
     document.addEventListener('click', function(e) {
-        if (e.target.tagName === 'BUTTON' || e.target.closest('.dish-card')) {
-            const dishCard = e.target.closest('.dish-card');
-            if (dishCard) {
-                const dishKeyword = dishCard.getAttribute('data-dish');
-                const dish = dishes.find(d => d.keyword === dishKeyword);
+        const dishCard = e.target.closest('.dish-card');
+        if (dishCard) {
+            const dishKeyword = dishCard.getAttribute('data-dish');
+            const dish = dishes.find(d => d.keyword === dishKeyword);
+            
+            if (dish) {
+                selectDish(dish);
                 
-                if (dish) {
-                    selectDish(dish);
-                    
-                    // Визуальная обратная связь
-                    document.querySelectorAll('.dish-card').forEach(card => {
-                        card.classList.remove('selected');
-                    });
-                    dishCard.classList.add('selected');
-                }
+                // Визуальная обратная связь
+                document.querySelectorAll('.dish-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                dishCard.classList.add('selected');
             }
         }
     });
 
+    // Функция выбора блюда
     function selectDish(dish) {
         selectedDishes[dish.category] = dish;
+        console.log(`✅ Selected ${dish.name} for ${dish.category}`);
         updateOrderDisplay();
         calculateTotal();
-        console.log(`Selected: ${dish.name}`);
     }
 
+    // Обновление отображения выбранных блюд в форме
     function updateOrderDisplay() {
         let hasSelectedDishes = false;
 
+        // Показываем категории заказа
+        showOrderCategories();
+
+        // Обновляем отображение для каждой категории
         Object.keys(selectedDishes).forEach(category => {
             const dish = selectedDishes[category];
             const displayElement = orderDisplay[category];
             
             if (displayElement) {
-                const categoryElement = displayElement.closest('.order-category');
-                
                 if (dish) {
                     displayElement.innerHTML = `
                         <div class="selected-dish">
@@ -68,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     `;
                     hasSelectedDishes = true;
-                    if (categoryElement) categoryElement.style.display = 'block';
                 } else {
                     const categoryNames = {
                         soup: 'суп',
@@ -76,24 +98,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         drink: 'напиток'
                     };
                     displayElement.innerHTML = `<span class="not-selected">${categoryNames[category]} не выбран</span>`;
-                    if (categoryElement) categoryElement.style.display = 'block';
                 }
             }
         });
 
+        // Показываем/скрываем сообщение о пустом заказе
         if (emptyOrderMessage) {
-            emptyOrderMessage.style.display = hasSelectedDishes ? 'none' : 'block';
+            if (hasSelectedDishes) {
+                emptyOrderMessage.style.display = 'none';
+                hideOrderCategories(); // Скрываем категории если есть выбранные блюда
+            } else {
+                emptyOrderMessage.style.display = 'block';
+                hideOrderCategories(); // Скрываем категории если ничего не выбрано
+            }
         }
         
+        // Показываем/скрываем блок с итоговой стоимостью
         if (orderSummary) {
             orderSummary.style.display = hasSelectedDishes ? 'block' : 'none';
         }
-
-        if (!hasSelectedDishes) {
-            orderCategories.forEach(cat => cat.style.display = 'none');
-        }
     }
 
+    // Подсчет общей стоимости
     function calculateTotal() {
         let total = 0;
         
@@ -106,7 +132,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (totalPriceElement) {
             totalPriceElement.textContent = `${total} ₽`;
         }
+        
+        console.log(`💰 Total order price: ${total} ₽`);
     }
 
+    // Инициализация
     updateOrderDisplay();
-});
+    console.log('🎉 OrderManager initialized successfully');
+}
+
+// Запускаем инициализацию когда DOM готов
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeOrderManager);
+} else {
+    initializeOrderManager();
+}
